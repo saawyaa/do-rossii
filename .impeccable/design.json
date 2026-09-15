@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-15T19:07:09.263613+00:00",
+  "title": "Design System: До России",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.01441 84.58)",
+          "oklch(26% 0.01441 84.58)",
+          "oklch(38% 0.01441 84.58)",
+          "oklch(49% 0.01441 84.58)",
+          "oklch(61% 0.01441 84.58)",
+          "oklch(72% 0.01441 84.58)",
+          "oklch(84% 0.01441 84.58)",
+          "oklch(95% 0.01441 84.58)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.00582 106.91)",
+          "oklch(26% 0.00582 106.91)",
+          "oklch(38% 0.00582 106.91)",
+          "oklch(49% 0.00582 106.91)",
+          "oklch(61% 0.00582 106.91)",
+          "oklch(72% 0.00582 106.91)",
+          "oklch(84% 0.00582 106.91)",
+          "oklch(95% 0.00582 106.91)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "ochre": {
+        "role": "primary",
+        "displayName": "Ochre",
+        "tonalRamp": [
+          "oklch(15% 0.09170 52.13)",
+          "oklch(26% 0.09170 52.13)",
+          "oklch(38% 0.09170 52.13)",
+          "oklch(49% 0.09170 52.13)",
+          "oklch(61% 0.09170 52.13)",
+          "oklch(72% 0.09170 52.13)",
+          "oklch(84% 0.09170 52.13)",
+          "oklch(95% 0.09170 52.13)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "stage-surround": {
+        "role": "neutral",
+        "displayName": "Stage Surround",
+        "tonalRamp": [
+          "oklch(15% 0.00303 145.41)",
+          "oklch(26% 0.00303 145.41)",
+          "oklch(38% 0.00303 145.41)",
+          "oklch(49% 0.00303 145.41)",
+          "oklch(61% 0.00303 145.41)",
+          "oklch(72% 0.00303 145.41)",
+          "oklch(84% 0.00303 145.41)",
+          "oklch(95% 0.00303 145.41)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "scene-dark": {
+        "role": "neutral",
+        "displayName": "Scene Dark",
+        "tonalRamp": [
+          "oklch(15% 0.00610 122.00)",
+          "oklch(26% 0.00610 122.00)",
+          "oklch(38% 0.00610 122.00)",
+          "oklch(49% 0.00610 122.00)",
+          "oklch(61% 0.00610 122.00)",
+          "oklch(72% 0.00610 122.00)",
+          "oklch(84% 0.00610 122.00)",
+          "oklch(95% 0.00610 122.00)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "text-on-dark": {
+        "role": "neutral",
+        "displayName": "Text On Dark",
+        "tonalRamp": [
+          "oklch(15% 0.01314 82.40)",
+          "oklch(26% 0.01314 82.40)",
+          "oklch(38% 0.01314 82.40)",
+          "oklch(49% 0.01314 82.40)",
+          "oklch(61% 0.01314 82.40)",
+          "oklch(72% 0.01314 82.40)",
+          "oklch(84% 0.01314 82.40)",
+          "oklch(95% 0.01314 82.40)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "artifact-mat": {
+        "role": "neutral",
+        "displayName": "Artifact Mat",
+        "tonalRamp": [
+          "oklch(15% 0.01703 88.01)",
+          "oklch(26% 0.01703 88.01)",
+          "oklch(38% 0.01703 88.01)",
+          "oklch(49% 0.01703 88.01)",
+          "oklch(61% 0.01703 88.01)",
+          "oklch(72% 0.01703 88.01)",
+          "oklch(84% 0.01703 88.01)",
+          "oklch(95% 0.01703 88.01)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "credit": {
+        "role": "neutral",
+        "displayName": "Credit",
+        "tonalRamp": [
+          "oklch(15% 0.01639 78.14)",
+          "oklch(26% 0.01639 78.14)",
+          "oklch(38% 0.01639 78.14)",
+          "oklch(49% 0.01639 78.14)",
+          "oklch(61% 0.01639 78.14)",
+          "oklch(72% 0.01639 78.14)",
+          "oklch(84% 0.01639 78.14)",
+          "oklch(95% 0.01639 78.14)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15% 0.09962 59.40)",
+          "oklch(26% 0.09962 59.40)",
+          "oklch(38% 0.09962 59.40)",
+          "oklch(49% 0.09962 59.40)",
+          "oklch(61% 0.09962 59.40)",
+          "oklch(72% 0.09962 59.40)",
+          "oklch(84% 0.09962 59.40)",
+          "oklch(95% 0.09962 59.40)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "nav-surface": {
+        "role": "neutral",
+        "displayName": "Nav Surface",
+        "tonalRamp": [
+          "oklch(15% 0.00395 106.77)",
+          "oklch(26% 0.00395 106.77)",
+          "oklch(38% 0.00395 106.77)",
+          "oklch(49% 0.00395 106.77)",
+          "oklch(61% 0.00395 106.77)",
+          "oklch(72% 0.00395 106.77)",
+          "oklch(84% 0.00395 106.77)",
+          "oklch(95% 0.00395 106.77)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "nav-hover": {
+        "role": "neutral",
+        "displayName": "Nav Hover",
+        "tonalRamp": [
+          "oklch(15% 0.01368 101.25)",
+          "oklch(26% 0.01368 101.25)",
+          "oklch(38% 0.01368 101.25)",
+          "oklch(49% 0.01368 101.25)",
+          "oklch(61% 0.01368 101.25)",
+          "oklch(72% 0.01368 101.25)",
+          "oklch(84% 0.01368 101.25)",
+          "oklch(95% 0.01368 101.25)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "map-land": {
+        "role": "neutral",
+        "displayName": "Map Land",
+        "tonalRamp": [
+          "oklch(15% 0.02218 83.26)",
+          "oklch(26% 0.02218 83.26)",
+          "oklch(38% 0.02218 83.26)",
+          "oklch(49% 0.02218 83.26)",
+          "oklch(61% 0.02218 83.26)",
+          "oklch(72% 0.02218 83.26)",
+          "oklch(84% 0.02218 83.26)",
+          "oklch(95% 0.02218 83.26)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "map-border": {
+        "role": "neutral",
+        "displayName": "Map Border",
+        "tonalRamp": [
+          "oklch(15% 0.03171 83.61)",
+          "oklch(26% 0.03171 83.61)",
+          "oklch(38% 0.03171 83.61)",
+          "oklch(49% 0.03171 83.61)",
+          "oklch(61% 0.03171 83.61)",
+          "oklch(72% 0.03171 83.61)",
+          "oklch(84% 0.03171 83.61)",
+          "oklch(95% 0.03171 83.61)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      },
+      "symbol-emphasis": {
+        "role": "neutral",
+        "displayName": "Symbol Emphasis",
+        "tonalRamp": [
+          "oklch(15% 0.08960 65.89)",
+          "oklch(26% 0.08960 65.89)",
+          "oklch(38% 0.08960 65.89)",
+          "oklch(49% 0.08960 65.89)",
+          "oklch(61% 0.08960 65.89)",
+          "oklch(72% 0.08960 65.89)",
+          "oklch(84% 0.08960 65.89)",
+          "oklch(95% 0.08960 65.89)"
+        ],
+        "rampNote": "Synthesized OKLCH preview ramp, not additional implementation tokens; alpha is omitted in ramps."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Opening display",
+        "purpose": "Opening title in fixed-stage pixels."
+      },
+      "body": {
+        "displayName": "Supporting body",
+        "purpose": "Scenic explanatory text; dialogs have independent viewport-sized text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "menu",
+        "value": "0 16px 50px #0006",
+        "purpose": "Lift contents panel above the scene."
+      },
+      {
+        "name": "counter",
+        "value": "0 1px 8px #000",
+        "purpose": "Maintain contrast over dark imagery."
+      }
+    ],
+    "motion": [
+      {
+        "name": "copy-ease",
+        "value": "power2.out",
+        "purpose": "GSAP text reveals."
+      },
+      {
+        "name": "camera-ease",
+        "value": "power2.inOut",
+        "purpose": "GSAP camera movement."
+      },
+      {
+        "name": "reduced-reveal",
+        "value": "0.18s",
+        "purpose": "Reduced-motion entrance."
+      },
+      {
+        "name": "reduced-crossfade",
+        "value": "0.3s out / 0.4s in",
+        "purpose": "Reduced or nonadjacent transition."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-controls-max",
+        "value": "900px"
+      },
+      {
+        "name": "clearance-min",
+        "value": "901px"
+      },
+      {
+        "name": "clearance-max",
+        "value": "1919px"
+      },
+      {
+        "name": "large-board-min",
+        "value": "2400px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Scene arrow",
+      "kind": "button",
+      "refersTo": "nav-arrow",
+      "description": "Independent desktop next-scene control.",
+      "html": "<button class=\"ds-arrow\" aria-label=\"Следующая сцена\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><path d=\"M8 20h24M20 8l12 12-12 12\"/></svg></button>",
+      "css": ".ds-arrow{width:88px;height:88px;border:1px solid #ffffff40;background:#141412b8;color:#fff;display:grid;place-items:center;cursor:pointer}.ds-arrow svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.3}.ds-arrow:hover:not(:disabled){background:#38372fea}.ds-arrow:disabled{opacity:.35;pointer-events:none}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    },
+    {
+      "name": "Contents navigation",
+      "kind": "nav",
+      "refersTo": "presentation-menu",
+      "description": "Numbered menu rows; current page carries a tonal highlight.",
+      "html": "<nav class=\"ds-menu\" aria-label=\"Содержание\"><button aria-current=\"page\"><span>01</span>До России</button><button><span>02</span>Одна территория</button></nav>",
+      "css": ".ds-menu{width:340px;padding:18px 24px 24px;background:var(--paper,#eee9df);color:var(--ink,#171714);box-shadow:0 16px 50px #0006;font-family:Inter,sans-serif}.ds-menu button{font:inherit;font-size:15px;border:0;border-bottom:1px solid #d6cebf;width:100%;padding:0 8px;min-height:49px;background:none;color:inherit;display:flex;align-items:center;gap:18px;text-align:left;cursor:pointer}.ds-menu button[aria-current=\"page\"]{color:#865030;background:#dfd6c7}.ds-menu span{font-size:11px;color:#78634e}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    },
+    {
+      "name": "Simplified transition control",
+      "kind": "input",
+      "description": "Native checkbox in the contents menu.",
+      "html": "<label class=\"ds-motion\"><input type=\"checkbox\" checked>Упрощённые переходы</label>",
+      "css": ".ds-motion{display:flex;align-items:center;gap:10px;font:13px Inter,sans-serif;min-height:48px;color:var(--ink,#171714);background:var(--paper,#eee9df)}.ds-motion input{width:20px;height:20px;accent-color:#815235}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    },
+    {
+      "name": "Archival caption",
+      "kind": "card",
+      "refersTo": "archival-card",
+      "description": "Caption specimen from the existing museum figure, with source link. Image omitted in this isolated caption preview.",
+      "html": "<figure class=\"ds-archive\"><figcaption><span>АРХЕОЛОГИЧЕСКИЙ МАТЕРИАЛ</span><h3>Каменная индустрия Кермека</h3><a href=\"https://www.old.archeo.ru/izdaniya-1/pazhmi-pajis/issues/pdf/02Shchelinsky.pdf\">В. Е. Щелинский · ИИМК РАН, 2025 · рис. 6 · Свободная лицензия не указана</a></figcaption></figure>",
+      "css": ".ds-archive{margin:0;padding:20px;background:var(--paper,#eee9df);color:var(--ink,#171714);font-family:Inter,sans-serif}.ds-archive figcaption{padding-top:14px}.ds-archive span{display:block;font-size:13px;letter-spacing:.09em;line-height:1.3}.ds-archive h3{font-size:23px;line-height:1.2;font-weight:400;margin:7px 0 10px}.ds-archive a{display:block;font-size:13px;line-height:1.4;text-decoration:none;color:#585249}.ds-archive a:hover{text-decoration:underline}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    },
+    {
+      "name": "Archive dialog close",
+      "kind": "button",
+      "description": "56px square image-dialog dismissal.",
+      "html": "<button class=\"ds-close\" aria-label=\"Закрыть изображение\">×</button>",
+      "css": ".ds-close{width:56px;height:56px;flex-shrink:0;border:1px solid #bdb3a4;background:transparent;font:32px Inter,sans-serif;color:var(--ink,#171714);cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    },
+    {
+      "name": "Restart",
+      "kind": "button",
+      "description": "Quiet restart action on the black ending.",
+      "html": "<div class=\"ds-ending\"><button class=\"ds-restart\">↻ С начала</button></div>",
+      "css": ".ds-ending{background:#000;padding:24px}.ds-restart{border:1px solid #ffffff30;background:transparent;font:18px Inter,sans-serif;min-height:64px;padding:0 30px;color:#c9c4ba;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c88b59;outline-offset:5px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "До России",
+    "overview": "A cinematic archaeological presentation using limestone paper, dark photographic reconstructions, fine serif display type, and restrained ochre map marks. The supplied layouts and imagery are the visual authority; this document records the implemented system, not a new identity.",
+    "keyCharacteristics": [
+      "Large display typography and deliberately paced scenes.",
+      "Museum-style archival captions kept distinct from artistic reconstructions.",
+      "Flat rectangular surfaces and independent presentation controls."
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the 1920×1080 composition and proportional letterboxing.",
+      "Do retain source, author, license, and reconstruction labels with their images.",
+      "Do show archival images with object-fit: contain and retain enlargement access.",
+      "Do keep controls outside the scaled stage and preserve visible keyboard focus.",
+      "Do honor system reduced motion and the manual simplified-transition toggle."
+    ],
+    "donts": [
+      "Don't introduce scrolling to the presentation stage or add sound.",
+      "Don't imply that the map sequence is an established migration route.",
+      "Don't present a supplied reconstruction as archaeological evidence.",
+      "Don't replace the supplied font pairing, imagery, or paper/ink/ochre direction."
+    ]
+  }
+}

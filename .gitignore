@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.venv/
+.vercel/
+reference-assets/
+test-results/
+qa/*.png
+*.tsbuildinfo
+.DS_Store
+.vercel
