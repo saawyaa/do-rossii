@@ -1,38 +1,135 @@
 import { gsap } from "gsap";
-export const config = {
-  lowMotion: false,
-  transitionDurations: [1.1, 1.15, 1.05, 1.1, 1.1, 1.15],
-};
-const q = (el: HTMLElement, selector: string) => el.querySelectorAll(selector);
-const placeImages = [
-  "",
-  "kermek.webp",
-  "denisova.webp",
-  "kostenki.webp",
-  "sungir.webp",
-];
-const getMapFocus = (el: HTMLElement, placeId?: string) => {
-  if (!placeId) return { x: 50, y: 50 };
-  const marker = el.querySelector(`#marker-${placeId}`) as SVGCircleElement | null;
-  if (!marker) {
-    return { x: 50, y: 50 };
-  }
-  const svg = marker.ownerSVGElement;
-  if (!svg) return { x: 50, y: 50 };
-  const rect = svg.getBoundingClientRect();
-  const cx = marker.cx.baseVal.value;
-  const cy = marker.cy.baseVal.value;
-  const x = ((cx / rect.width) * 100) || 50;
-  const y = ((cy / rect.height) * 100) || 50;
-  return { x, y };
-};
+import { locations } from "../data/locations";
+
+export const config = { lowMotion: false };
+const query = (el: Element, selector: string) =>
+  Array.from(el.querySelectorAll<HTMLElement>(selector));
+export const photoPose = (_index: number) => ({ x: 0, y: 0, scale: 1 });
+
+// Each node belongs to exactly one reveal step. No generic + special-case tweens.
+function steps(el: HTMLElement, index: number): HTMLElement[] {
+  const selectors: Record<number, string[]> = {
+    0: [
+      "#opening-year",
+      ".hero-copy h1",
+      ".hero-sub",
+      ".reconstruction",
+      ".hero-source",
+    ],
+    1: [
+      ".map-copy h1",
+      ".map-copy p",
+      ".location-kermek",
+      ".location-denisova",
+      ".location-kostenki",
+      ".location-sungir",
+      ".time-item",
+    ],
+    2: [
+      ".site-copy .region",
+      ".site-copy h1",
+      ".date",
+      ".thesis",
+      ".detail",
+      ".kermek-card",
+      ".reconstruction",
+    ],
+    3: [
+      ".site-copy h1",
+      ".region",
+      ".date",
+      ".layer-thesis",
+      ".museum-column",
+      ".museum-column .archival",
+      ".reconstruction",
+    ],
+    4: [
+      ".site-copy h1",
+      ".region",
+      ".date",
+      ".period",
+      ".thesis",
+      ".kostenki-cards .archival",
+      ".chronology-note",
+      ".reconstruction",
+    ],
+    5: [
+      ".site-copy h1",
+      ".region",
+      ".date",
+      ".beads",
+      ".burial-card",
+      ".artifact-strip .archival",
+      ".sungir-thesis",
+      ".reconstruction",
+    ],
+    6: [
+      ".location-sungir",
+      ".location-kostenki",
+      ".location-denisova",
+      ".location-kermek",
+      ".final-copy h1",
+      ".final-thesis",
+      ".sites-list",
+      ".final-summary",
+      ".callback",
+    ],
+  };
+  if (index !== 1 && index !== 6) selectors[index].unshift(".shade");
+  return [
+    ...new Set(selectors[index].flatMap((selector) => query(el, selector))),
+  ];
+}
+function overlays(el: HTMLElement) {
+  const elements = query(
+    el,
+    ".shade,.hero-copy,#opening-year,.site-copy,.archival,.museum-column,.reconstruction,.hero-source,.layer-thesis,.chronology-note,.map-copy,.timeline,.final-copy,.callback",
+  );
+  return elements.filter(
+    (node) =>
+      !elements.some((parent) => parent !== node && parent.contains(node)),
+  );
+}
 export function resetScene(el: HTMLElement, index: number) {
-  gsap.set([el, ...q(el, "*")], {
-    clearProps: "transform,opacity,visibility,filter,clipPath,willChange",
-  });
+  const nodes = [...new Set([...steps(el, index), ...overlays(el)])];
+  gsap.set(nodes, { clearProps: "transform,opacity,visibility,willChange" });
   gsap.set(el, { autoAlpha: 1 });
-  if (index === 3)
-    gsap.set(q(el, ".scene-bg"), { scale: 1.18, y: -130, x: -30 });
+  const bg = el.querySelector(".scene-bg");
+  if (bg)
+    gsap.set(bg, { ...photoPose(index), transformOrigin: "0 0", opacity: 1 });
+}
+function prepare(el: HTMLElement, index: number) {
+  resetScene(el, index);
+  gsap.set(steps(el, index), { opacity: 0, y: 10 });
+  steps(el, index).forEach((node) => {
+    node.dataset.revealCount = "0";
+  });
+}
+function appendReveal(
+  tl: gsap.core.Timeline,
+  el: HTMLElement,
+  index: number,
+  reduced: boolean,
+  mapReady = false,
+) {
+  const nodes = steps(el, index).filter(
+    (node) => !mapReady || !node.classList.contains("map-location"),
+  );
+  if (reduced) {
+    tl.set(nodes, { opacity: 1, y: 0 });
+    return;
+  }
+  for (const node of nodes) {
+    tl.to(node, {
+      opacity: 1,
+      y: 0,
+      duration: node.classList.contains("archival") ? 0.28 : 0.23,
+      ease: "power1.out",
+      onStart: () => {
+        node.dataset.revealCount = String(Number(node.dataset.revealCount) + 1);
+      },
+    });
+  }
 }
 export function reveal(
   el: HTMLElement,
@@ -40,185 +137,110 @@ export function reveal(
   reduced: boolean,
   done: () => void,
 ) {
-  resetScene(el, index);
+  prepare(el, index);
   const tl = gsap.timeline({ onComplete: done });
-  if (reduced) {
-    tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.18 });
-    return tl;
+  if (!reduced && index === 0) {
+    gsap.set(el.querySelector(".scene-bg"), { opacity: 0 });
+    tl.to(el.querySelector(".scene-bg"), { opacity: 1, duration: 0.6 });
   }
-  const texts = q(el, ".reveal");
-  if (index === 0) {
-    gsap.set(texts, { opacity: 0, y: 18 });
-    gsap.set(q(el, ".scene-bg"), { opacity: 0, scale: 1.08 });
-    tl.fromTo(
-      q(el, "#opening-year"),
-      { opacity: 0, x: 280, y: -24, scale: 1.8 },
-      { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.7, ease: "power2.out" },
-      0.15,
-    )
-      .to(q(el, ".scene-bg"), { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 0.3)
-      .fromTo(texts, { y: 18 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.12, ease: "power2.out" }, 0.42);
-  } else if (index === 3) {
-    tl.fromTo(
-      texts,
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: "power2.out" },
-      0,
-    )
-      .fromTo(
-        q(el, ".scene-bg"),
-        { scale: 1.08, y: 50, x: -12 },
-        { scale: 1.18, y: -130, x: -30, duration: 0.9, ease: "power2.inOut" },
-        0.12,
-      )
-      .fromTo(
-        q(el, ".layer-thesis"),
-        { opacity: 0 },
-        { opacity: 1, duration: 0.4 },
-        0.36,
-      )
-      .fromTo(
-        q(el, ".museum-column .archival"),
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, stagger: 0.14, duration: 0.38 },
-        0.52,
-      );
-  } else if (index === 5) {
-    tl.fromTo(
-      texts,
-      { opacity: 0, y: 14 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: "power2.out" },
-      0,
-    )
-      .fromTo(q(el, ".beads"), { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.18)
-      .fromTo(q(el, ".burial-card"), { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.28)
-      .fromTo(
-        q(el, ".artifact-strip .archival"),
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.36, stagger: 0.12 },
-        0.38,
-      )
-      .fromTo(q(el, ".sungir-thesis"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, 0.48);
-  } else if (index === 6) {
-    const markers = ["kostenki", "denisova", "kermek"].map((k) =>
-      el.querySelector(".location-" + k),
-    );
-    tl.fromTo(
-      markers,
-      { opacity: 0.15 },
-      { opacity: 1, duration: 0.28, stagger: 0.12 },
-      0,
-    ).fromTo(
-      texts,
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.42, stagger: 0.14, ease: "power2.out" },
-      0.18,
-    );
-  } else {
-    tl.fromTo(
-      texts,
-      { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.45, stagger: 0.12, ease: "power2.out" },
-      0.08,
-    );
-    if (index === 1)
-      tl.fromTo(q(el, ".map-location"), { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 0.2);
-    if (index === 2 || index === 4) {
-      tl.fromTo(
-        q(el, ".scene-bg"),
-        { scale: 1.08 },
-        { scale: 1, duration: 0.5 },
-        0,
-      ).fromTo(
-        q(el, ".archival"),
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.38, stagger: 0.12 },
-        0.2,
-      );
-    }
-  }
+  appendReveal(tl, el, index, reduced);
+  // Keep completion asynchronous even in reduced motion.
+  tl.to({}, { duration: reduced ? 0.01 : 0.04 });
   return tl;
 }
+
+function pointInStage(marker: Element, stage: HTMLElement) {
+  const m = marker.getBoundingClientRect(),
+    s = stage.getBoundingClientRect();
+  const scale = s.width / 1920;
+  return {
+    x: (m.x + m.width / 2 - s.x) / scale,
+    y: (m.y + m.height / 2 - s.y) / scale,
+    diameter: m.width / scale,
+  };
+}
+
 export function transition(
-  from: HTMLElement,
-  to: HTMLElement,
-  index: number,
-  target: number,
-  stage: HTMLElement,
-  reduced: boolean,
-  done: () => void,
+  from: HTMLElement, to: HTMLElement, index: number, target: number,
+  stage: HTMLElement, reduced: boolean, done: () => void,
+  onReveal: () => void = () => {}, immediate = false,
 ) {
-  resetScene(to, target);
-  gsap.set(to, { autoAlpha: 0, zIndex: 2 });
-  gsap.set(from, { zIndex: 3 });
-  const cleanup = () => {
-    gsap.set(from, { autoAlpha: 0 });
-    gsap.set([from, to, ...q(from, "*"), ...q(to, "*")], {
-      willChange: "auto",
-    });
-    done();
+  prepare(to, target);
+  gsap.set(to, {autoAlpha:0,zIndex:2});
+  gsap.set(from,{zIndex:3});
+  const travel=stage.querySelector<HTMLElement>(".travel-layer")!;
+  const camera=travel.querySelector<HTMLElement>(".travel-camera")!;
+  const aperture=travel.querySelector<HTMLElement>(".travel-aperture")!;
+  const photo=travel.querySelector<HTMLElement>(".aperture-content")!;
+  const source=locations.find(place=>place.slide===index);
+  const destination=locations.find(place=>place.slide===target);
+  const zoom=4.6, fullRadius=Math.hypot(960,540)+3;
+  const iris={radius:fullRadius};
+  // Scale a fixed circular clip, counter-scale its contents. The photo itself stays
+  // exactly 1920×1080 at (0,0); only the aperture grows. No animated clip-path paint.
+  const drawIris=()=>{
+    const scale=iris.radius/960;
+    aperture.style.transform=`scale3d(${scale},${scale},1)`;
+    photo.style.transform=`scale3d(${1/scale},${1/scale},1)`;
   };
-  const tl = gsap.timeline({ onComplete: cleanup, defaults: { ease: "power2.out" } });
-  if (reduced || Math.abs(target - index) !== 1) {
-    tl.to(from, { opacity: 0, duration: 0.18 }, 0).to(to, { autoAlpha: 1, duration: 0.2 }, 0);
-    return tl;
-  }
-  gsap.set(q(from, ".scene-bg,.map-world"), {
-    willChange: "transform,opacity",
-  });
-  const sourceIndex = index >= 1 && index <= 4 ? index : 0;
-  const targetIndex = target >= 1 && target <= 4 ? target : 0;
-  const placeFor = (i: number) => (i >= 1 && i <= 4 ? placeImages[i] : null);
-  const makeBloom = (image: string | null, focus: { x: number; y: number }) => {
-    if (!image) return null;
-    const bloom = document.createElement("div");
-    bloom.className = "map-photo-bloom";
-    bloom.style.backgroundImage = `url(/assets/${image})`;
-    bloom.style.setProperty("--focus-x", `${focus.x}%`);
-    bloom.style.setProperty("--focus-y", `${focus.y}%`);
-    bloom.style.clipPath = `circle(0% at ${focus.x}% ${focus.y}%)`;
-    stage.appendChild(bloom);
-    return bloom;
+  const phase=(name:string)=>{stage.dataset.travelPhase=name;};
+  const cleanup=()=>{
+    gsap.set(travel,{autoAlpha:0});
+    gsap.set([camera,aperture,photo],{clearProps:"transform,opacity,willChange"});
+    phase("hold");
   };
-  const sourceId = sourceIndex > 0 ? ["kermek", "denisova", "kostenki", "sungir"][sourceIndex - 1] : undefined;
-  const targetId = targetIndex > 0 ? ["kermek", "denisova", "kostenki", "sungir"][targetIndex - 1] : undefined;
-  const sourceFocus = getMapFocus(from, sourceId);
-  const targetFocus = getMapFocus(to, targetId);
-  const sourceBloom = makeBloom(placeFor(sourceIndex), sourceFocus);
-  const targetBloom = makeBloom(placeFor(targetIndex), targetFocus);
-  tl.to(from.querySelectorAll(".reveal"), { opacity: 0, duration: 0.12 }, 0);
-  if (sourceBloom) {
-    tl.set(sourceBloom, { opacity: 1 }, 0)
-      .to(
-        sourceBloom,
-        {
-          clipPath: `circle(130% at ${sourceFocus.x}% ${sourceFocus.y}%)`,
-          scale: 1.12,
-          opacity: 1,
-          duration: 0.36,
-          ease: "power2.inOut",
-        },
-        0.04,
-      )
-      .to(sourceBloom, { opacity: 0, duration: 0.16, ease: "power2.out" }, 0.35);
+  const tl=gsap.timeline({onComplete:()=>{cleanup();done();},onInterrupt:cleanup});
+  if(reduced||immediate||index===target){
+    if(immediate)resetScene(to,target);
+    tl.to(from,{opacity:0,duration:.18}).set(from,{visibility:"hidden"})
+      .to(to,{autoAlpha:1,duration:.18}).call(onReveal);
+    if(!immediate)appendReveal(tl,to,target,reduced);
+    tl.to({},{duration:.01});return tl;
   }
-  if (targetBloom) {
-    tl.set(targetBloom, { opacity: 0, scale: 0.94, clipPath: `circle(0% at ${targetFocus.x}% ${targetFocus.y}%)` }, 0.18)
-      .to(targetBloom, { opacity: 1, duration: 0.18 }, 0.2)
-      .to(
-        targetBloom,
-        {
-          clipPath: `circle(145% at ${targetFocus.x}% ${targetFocus.y}%)`,
-          scale: 1.12,
-          duration: 0.42,
-          ease: "power2.inOut",
-        },
-        0.22,
-      );
+  gsap.set(travel,{autoAlpha:0,zIndex:10});
+  gsap.set(camera,{x:0,y:0,scale:1,transformOrigin:"0 0",willChange:"transform",force3D:true});
+  gsap.set(aperture,{opacity:0,transformOrigin:"50% 50%",willChange:"transform,opacity",force3D:true});
+  gsap.set(photo,{transformOrigin:"50% 50%",willChange:"transform",force3D:true});
+  drawIris();
+  const images=query(photo,"img");gsap.set(images,{opacity:0});
+  const usePhoto=(id:string)=>{gsap.set(images,{opacity:0});gsap.set(photo.querySelector(`[data-place="${id}"]`),{opacity:1});stage.dataset.travelPlace=id;};
+  // Read every canonical point before applying any camera transform.
+  const points=new Map(locations.map(place=>[place.id,pointInStage(travel.querySelector(`#marker-${place.id}-travel`)!,stage)]));
+  phase("exit-content");
+  tl.to(overlays(from),{opacity:0,duration:.28,ease:"power1.out"});
+  if(source){
+    const p=points.get(source.id)!;
+    usePhoto(source.id);
+    gsap.set(camera,{transformOrigin:`${p.x}px ${p.y}px`,x:960-p.x,y:540-p.y,scale:zoom});
+    gsap.set(aperture,{opacity:1});
+    tl.set(travel,{autoAlpha:1}).set(from,{autoAlpha:0})
+      .call(()=>phase("close-aperture"))
+      .to(iris,{radius:p.diameter/2*zoom,duration:.75,ease:"power2.inOut",onUpdate:drawIris})
+      .to(aperture,{opacity:0,duration:.18})
+      .call(()=>phase("out-to-map"))
+      .to(camera,{x:0,y:0,scale:1,duration:.9,ease:"power2.inOut"});
+  }else if(index===1){
+    tl.set(travel,{autoAlpha:1}).set(from,{autoAlpha:0});
+  }else{
+    tl.to(from,{opacity:0,duration:.25}).set(from,{visibility:"hidden"}).to(travel,{autoAlpha:1,duration:.2});
   }
-  tl.to(to, { autoAlpha: 1, duration: 0.18 }, 0.5).call(() => {
-    sourceBloom?.remove();
-    targetBloom?.remove();
-  });
+  tl.call(()=>phase("map")).to({},{duration:.12});
+  if(destination){
+    const p=points.get(destination.id)!;
+    tl.call(()=>{usePhoto(destination.id);phase("camera-in");})
+      .set(camera,{x:0,y:0,scale:1,transformOrigin:`${p.x}px ${p.y}px`})
+      .to(camera,{x:960-p.x,y:540-p.y,scale:zoom,duration:.95,ease:"power2.inOut"})
+      .call(()=>{iris.radius=p.diameter/2*zoom;drawIris();phase("open-aperture");})
+      .to(aperture,{opacity:1,duration:.18})
+      .to(iris,{radius:fullRadius,duration:.85,ease:"power2.inOut",onUpdate:drawIris})
+      .call(()=>phase("photo-fullscreen"));
+  }
+  if(!destination)tl.set(query(to,".map-location"),{opacity:1,y:0});
+  tl.set(to,{autoAlpha:1});
+  if(target===6)tl.to(travel,{autoAlpha:0,duration:.35});
+  else tl.set(travel,{autoAlpha:0});
+  tl.call(()=>{phase("reveal");onReveal();});
+  appendReveal(tl,to,target,false,!destination);
+  tl.to({},{duration:.04});
   return tl;
 }

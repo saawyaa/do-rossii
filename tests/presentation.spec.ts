@@ -3,7 +3,7 @@ const hold = async (page: any) =>
   await expect(page.locator("main")).toHaveAttribute("data-phase", "hold", {
     timeout: 14000,
   });
-test("seven scenes, all assets, navigation lock, backward HOLD, replay, exact morph, ending and restart", async ({
+test("seven scenes, all assets, navigation lock, backward journey, replay, photo route, ending and restart", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -20,7 +20,7 @@ test("seven scenes, all assets, navigation lock, backward HOLD, replay, exact mo
     await expect(page.locator("main")).toHaveAttribute("data-slide", String(i));
     await page.screenshot({ path: `qa/0${i}-desktop.png` });
   }
-  await expect(page.locator(".map-photo-bloom")).toHaveCount(0);
+  await expect(page.locator(".burial-morph")).toHaveCount(0);
   const broken = await page
     .locator("img")
     .evaluateAll((imgs) =>

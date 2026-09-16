@@ -7,10 +7,12 @@ import {
   useState,
 } from "react";
 import { gsap } from "gsap";
+import { Map } from "./components/Map";
+import { locations } from "./data/locations";
 import { SlideContent } from "./components/Slides";
 import { slides, backgrounds } from "./data/slides";
 import { sources } from "./data/sources";
-import { config, reveal, resetScene, transition } from "./animation/controller";
+import { config, reveal, transition } from "./animation/controller";
 type State = {
   slide: number;
   phase: "enter" | "reveal" | "hold" | "exit";
@@ -148,22 +150,19 @@ export default function App() {
       return;
     }
     syncHash(n);
-    const complete = () => {
-      current.current = n;
-      dispatch({ slide: n, phase: "reveal" });
-      if (n < prev || immediate) {
-        resetScene(sections.current[n]!, n);
-        finish();
-      } else timeline.current = reveal(sections.current[n]!, n, low, finish);
-    };
     timeline.current = transition(
       sections.current[prev]!,
       sections.current[n]!,
       prev,
       n,
       stage.current!,
-      low || immediate,
-      complete,
+      low,
+      finish,
+      () => {
+        current.current = n;
+        dispatch({ slide: n, phase: "reveal" });
+      },
+      immediate,
     );
   };
   const replay = () => {
@@ -252,7 +251,12 @@ export default function App() {
       <div
         className="stage"
         ref={stage}
-        style={{ transform: `translate(-50%, -50%) scale(${scale})`, "--nav-safe-x": `${136 / scale}px` } as CSSProperties}
+        style={
+          {
+            transform: `translate(-50%, -50%) scale(${scale})`,
+            "--nav-safe-x": `${136 / scale}px`,
+          } as CSSProperties
+        }
         onTouchStart={(e) => {
           if ((e.target as HTMLElement).closest("a,button")) return;
           touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -266,6 +270,12 @@ export default function App() {
             go(current.current + (dx < 0 ? 1 : -1));
         }}
       >
+        <div className="travel-layer" aria-hidden="true" inert>
+          <div className="travel-camera"><img className="travel-map-raster" src="/assets/map-overview.webp" alt="" /><Map travel /></div>
+          <div className="travel-aperture"><div className="aperture-content">
+            {locations.map(place=><img key={place.id} data-place={place.id} src={place.image} alt="" />)}
+          </div></div>
+        </div>
         {slides.map((title, i) => (
           <section
             key={title}

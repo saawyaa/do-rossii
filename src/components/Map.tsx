@@ -1,12 +1,7 @@
+import { memo } from "react";
 import { geoConicConformal, geoPath } from "d3-geo";
 import geography from "../data/russia.json";
 import { locations } from "../data/locations";
-const locationImages: Record<string, string> = {
-  kermek: "/assets/kermek.webp",
-  denisova: "/assets/denisova.webp",
-  kostenki: "/assets/kostenki.webp",
-  sungir: "/assets/sungir.webp",
-};
 const projection = geoConicConformal()
   .rotate([-105, 0])
   .parallels([50, 70])
@@ -22,14 +17,40 @@ const points = locations.map((p) => ({
   ...p,
   point: projection([p.lon, p.lat])!,
 }));
-export function Map({ final = false }: { final?: boolean }) {
+export const Map = memo(function Map({
+  final = false,
+  travel = false,
+}: {
+  final?: boolean;
+  travel?: boolean;
+}) {
+  const suffix = travel ? "-travel" : final ? "-final" : "";
   return (
     <div className={`map-world ${final ? "final-map" : ""}`}>
       <svg
         viewBox="0 0 1230 715"
         role="img"
-        aria-label="Карта: Кермек на Тамани, Денисова пещера на Алтае, Костёнки на Дону и Сунгирь под Владимиром"
+        aria-label="Карта четырёх памятников: Кермек, Денисова пещера, Костёнки, Сунгирь"
       >
+        <defs>
+          {points.map((p) => (
+            <pattern
+              key={p.id}
+              id={`photo-${p.id}${suffix}`}
+              width="1"
+              height="1"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid slice"
+            >
+              <image
+                href={p.image}
+                width="100"
+                height="100"
+                preserveAspectRatio="xMidYMid slice"
+              />
+            </pattern>
+          ))}
+        </defs>
         <path className="land" d={path} />
         <path
           className="route"
@@ -37,22 +58,15 @@ export function Map({ final = false }: { final?: boolean }) {
         />
         {points.map((p) => (
           <g key={p.id} className={`map-location location-${p.id}`}>
-            <image
-              className="marker-photo"
-              href={locationImages[p.id]}
-              x={p.point[0] - 22}
-              y={p.point[1] - 22}
-              width="44"
-              height="44"
-              preserveAspectRatio="xMidYMid slice"
-            />
             <path className="leader" d={`M${p.point} l${p.dx},${p.dy}`} />
             <circle
-              id={`marker-${p.id}${final ? "-final" : ""}`}
-              className="marker"
+              id={`marker-${p.id}${suffix}`}
+              className="marker photo-marker"
+              data-image={p.image}
               cx={p.point[0]}
               cy={p.point[1]}
-              r="7"
+              r="26"
+              style={{ fill: `url(#photo-${p.id}${suffix})` }}
             />
             <text
               x={p.point[0] + p.dx + (p.dx < 0 ? -12 : 12)}
@@ -72,4 +86,4 @@ export function Map({ final = false }: { final?: boolean }) {
       </span>
     </div>
   );
-}
+});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-15T19:07:09.263613+00:00",
+  "generatedAt": "2026-09-16T03:48:58.767786+00:00",
   "title": "Design System: До России",
   "extensions": {
     "colorMeta": {
@@ -240,23 +240,58 @@
     "motion": [
       {
         "name": "copy-ease",
-        "value": "power2.out",
-        "purpose": "GSAP text reveals."
+        "value": "power1.out",
+        "purpose": "Sequential, unique reveal steps with opacity and 10px vertical travel."
+      },
+      {
+        "name": "text-step",
+        "value": "0.23s",
+        "purpose": "Each non-card step in the explicit scene order."
+      },
+      {
+        "name": "card-step",
+        "value": "0.28s",
+        "purpose": "Each archive card after the preceding step completes."
       },
       {
         "name": "camera-ease",
         "value": "power2.inOut",
-        "purpose": "GSAP camera movement."
+        "purpose": "Shared site-photo → map → site-photo travel in both directions."
       },
       {
-        "name": "reduced-reveal",
-        "value": "0.18s",
-        "purpose": "Reduced-motion entrance."
+        "name": "aperture-close",
+        "value": ".75s",
+        "purpose": "Close circle over a stationary full-stage photo."
       },
       {
-        "name": "reduced-crossfade",
-        "value": "0.3s out / 0.4s in",
-        "purpose": "Reduced or nonadjacent transition."
+        "name": "camera-out",
+        "value": ".9s",
+        "purpose": "Move map camera back from scale 4.6 to overview."
+      },
+      {
+        "name": "map-pause",
+        "value": ".12s",
+        "purpose": "Hold shared geography between locations."
+      },
+      {
+        "name": "camera-in",
+        "value": ".95s",
+        "purpose": "Move map camera toward destination point to scale 4.6."
+      },
+      {
+        "name": "aperture-crossfade",
+        "value": ".18s",
+        "purpose": "Blend between map thumbnail and full-stage image inside matching circle."
+      },
+      {
+        "name": "aperture-open",
+        "value": ".85s",
+        "purpose": "Expand circular mask to all corners; photo stays stationary."
+      },
+      {
+        "name": "reduced-fades",
+        "value": ".18s out then .18s in",
+        "purpose": "Reduced-motion path bypasses camera and aperture."
       }
     ],
     "breakpoints": [

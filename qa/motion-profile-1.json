@@ -1,0 +1,10 @@
+{
+  "environment": "Headless local Chrome, 1920×1080, 1× CPU throttle; not a guarantee for board GPU",
+  "route": "Kermek → Denisova",
+  "frames": 411,
+  "medianMs": 16.699999999999818,
+  "p95Ms": 16.700000000000728,
+  "p99Ms": 16.800000000000182,
+  "over50ms": 0,
+  "longTasksMs": []
+}

@@ -1,6 +1,8 @@
 export const locations = [
   {
     id: "kermek",
+    slide: 2,
+    image: "/assets/kermek.webp",
     name: "Кермек",
     region: "Тамань",
     lon: 37.103019,
@@ -12,6 +14,8 @@ export const locations = [
   },
   {
     id: "denisova",
+    slide: 3,
+    image: "/assets/denisova.webp",
     name: "Денисова пещера",
     region: "Алтай",
     lon: 84.676389,
@@ -23,6 +27,8 @@ export const locations = [
   },
   {
     id: "kostenki",
+    slide: 4,
+    image: "/assets/kostenki.webp",
     name: "Костёнки",
     region: "Средний Дон",
     lon: 39.0358,
@@ -34,6 +40,8 @@ export const locations = [
   },
   {
     id: "sungir",
+    slide: 5,
+    image: "/assets/sungir.webp",
     name: "Сунгирь",
     region: "Владимир",
     lon: 40.508333,

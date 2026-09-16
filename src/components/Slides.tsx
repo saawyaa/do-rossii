@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { ArchivalCard } from "./ArchivalCard";
 import { Map } from "./Map";
 import { locations } from "../data/locations";
@@ -15,7 +16,11 @@ const Background = ({ name }: { name: string }) => (
     <div className="shade" />
   </>
 );
-export function SlideContent({ index }: { index: number }) {
+export const SlideContent = memo(function SlideContent({
+  index,
+}: {
+  index: number;
+}) {
   switch (index) {
     case 0:
       return (
@@ -215,4 +220,4 @@ export function SlideContent({ index }: { index: number }) {
     default:
       return null;
   }
-}
+});

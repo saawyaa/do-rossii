@@ -316,16 +316,7 @@ img {
   font-size: 22px;
   fill: #332c23;
 }
-.marker-photo {
-  opacity: 0.92;
-  clip-path: circle(50% at 50% 50%);
-  stroke: var(--paper);
-  stroke-width: 2;
-}
-.map-location .marker {
-  fill: transparent;
-  stroke: transparent;
-}
+
 .map-location tspan {
   font-size: 16px;
   fill: #655a4a;
@@ -615,17 +606,7 @@ img {
     linear-gradient(90deg, rgba(10, 9, 7, 0.55), rgba(10, 9, 7, 0.15)),
     linear-gradient(0deg, rgba(10, 9, 7, 0.65), transparent 70%);
 }
-.map-photo-bloom {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  background-color: #1b1915;
-  background-position: center;
-  background-size: cover;
-  transform-origin: var(--focus-x, 50%) var(--focus-y, 50%);
-  pointer-events: none;
-  filter: saturate(1.08);
-}
+
 .final-map {
   left: 615px;
   top: 35px;
@@ -1095,10 +1076,153 @@ kbd {
 }
 /* Keep the full-size board controls clear when the 1920px composition is scaled. */
 @media (min-width: 901px) and (max-width: 1919px) {
-  .reconstruction { left: max(104px, var(--nav-safe-x)); }
-  .kermek-card { left: auto; right: max(120px, var(--nav-safe-x)); }
-  .hero-source { right: max(130px, var(--nav-safe-x)); }
-  .timeline { left: max(96px, var(--nav-safe-x)); right: max(110px, var(--nav-safe-x)); }
-  .artifact-strip { right: max(135px, var(--nav-safe-x)); }
-  .museum-column { padding-bottom: max(110px, var(--nav-safe-x)); }
+  .reconstruction {
+    left: max(104px, var(--nav-safe-x));
+  }
+  .kermek-card {
+    left: auto;
+    right: max(120px, var(--nav-safe-x));
+  }
+  .hero-source {
+    right: max(130px, var(--nav-safe-x));
+  }
+  .timeline {
+    left: max(96px, var(--nav-safe-x));
+    right: max(110px, var(--nav-safe-x));
+  }
+  .artifact-strip {
+    right: max(135px, var(--nav-safe-x));
+  }
+  .museum-column {
+    padding-bottom: max(110px, var(--nav-safe-x));
+  }
 }
+/* Shared photo itinerary: composited transforms/opacity only. */
+.travel-layer {
+  position: absolute;
+  inset: 0;
+  background: #eee9df;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint;
+}
+.photo-marker {
+  stroke: #eee9df;
+  stroke-width: 3;
+}
+.final-map .photo-marker {
+  stroke: #bda588;
+}
+.slide-4 .denisova-window {
+  width: 1920px;
+}
+.slide-4 .denisova-window .scene-bg {
+  width: 1920px;
+  height: 1080px;
+}
+.slide-3 .scene-bg,
+.slide-5 .scene-bg {
+  transform-origin: 0 0;
+}
+.slide-3 .site-copy,
+.slide-5 .site-copy {
+  left: 76px;
+  top: 90px;
+  width: 490px;
+}
+.slide-3 h1,
+.slide-5 h1 {
+  font-size: 92px;
+}
+.slide-3 .region,
+.slide-5 .region {
+  font-size: 17px;
+}
+.slide-3 .date,
+.slide-5 .date {
+  font-size: 37px;
+}
+.slide-3 .thesis,
+.slide-5 .thesis {
+  margin-top: 36px;
+  font-size: 27px;
+  line-height: 1.45;
+}
+.slide-3 .detail {
+  font-size: 21px;
+  line-height: 1.5;
+  margin-top: 24px;
+}
+.slide-3 .kermek-card {
+  left: 620px;
+  right: auto;
+  top: 808px;
+  width: 1180px;
+  height: 170px;
+  padding: 16px;
+  flex-direction: row;
+  gap: 28px;
+}
+.slide-3 .kermek-card .archival-image {
+  flex: 0 0 195px;
+  height: 100%;
+}
+.slide-3 .kermek-card figcaption {
+  padding-top: 10px;
+  flex: 1;
+}
+.slide-3 .kermek-card h3 {
+  font-size: 30px;
+  margin: 12px 0;
+}
+.slide-3 .kermek-card .credit {
+  font-size: 15px;
+}
+.slide-5 .kostenki-cards {
+  left: 620px;
+  top: 808px;
+  width: 1180px;
+  height: 170px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 170px;
+  gap: 24px;
+}
+.slide-5 .kostenki-cards .archival {
+  flex-direction: row;
+  padding: 16px;
+  gap: 18px;
+}
+.slide-5 .kostenki-cards .archival-image {
+  flex: 0 0 145px;
+  height: 100%;
+}
+.slide-5 .kostenki-cards figcaption {
+  padding-top: 0;
+  flex: 1;
+  min-width: 0;
+}
+.slide-5 .kostenki-cards h3 {
+  font-size: 22px;
+}
+.slide-5 .chronology-note {
+  left: 76px;
+  bottom: 210px;
+  width: 490px;
+  font-size: 17px;
+}
+@media (min-width: 901px) and (max-width: 1919px) {
+  .slide-3 .kermek-card,
+  .slide-5 .kostenki-cards {
+    width: calc(1300px - max(60px, var(--nav-safe-x)));
+  }
+}
+/* Camera zooms the map; a circular aperture uncovers a stationary full-screen photo. */
+.travel-camera { position:absolute; inset:0; }
+.travel-camera .map-world { visibility:hidden; }
+.travel-map-raster { position:absolute; inset:0; width:1920px; height:1080px; }
+.travel-aperture { position:absolute; left:0; top:-420px; width:1920px; height:1920px; border-radius:50%; overflow:hidden; transform-origin:center; }
+.aperture-content { position:absolute; left:0; top:420px; width:1920px; height:1080px; transform-origin:center; }
+.aperture-content img { position:absolute; inset:0; width:1920px; height:1080px; object-fit:cover; opacity:0; }
+.slide-3 .shade,.slide-5 .shade { background:linear-gradient(90deg,rgba(10,14,12,.77),rgba(10,14,12,.3) 48%,rgba(10,14,12,.06) 76%),linear-gradient(0deg,rgba(10,14,12,.65),transparent 25%); }

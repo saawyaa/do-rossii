@@ -8,3 +8,4 @@ qa/*.png
 *.tsbuildinfo
 .DS_Store
 .vercel
+.env*

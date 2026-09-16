@@ -19,7 +19,7 @@ The primary action is next scene. Previous, replay, fullscreen, direct contents 
 
 ## Chosen direction and memorable moment
 
-The supplied storyboard governs the sequence. The opening number settles into the reconstruction. Denisova travels vertically through layers. Sungir's museum burial image contracts into its map point before the final thesis. The final callback resolves into a black screen with restart.
+The latest user correction keeps all backgrounds full-stage and leaves cards as positioned. Every ordinary site transition, forward or backward, closes a circular aperture over the stationary current reconstruction, pulls the camera back to the map, zooms the map toward the destination photo point, then opens a circular aperture over the stationary destination reconstruction. All four map circles contain their corresponding photos at real geographic coordinates. The photo never flies out of a point as a moving rectangle. Each scene reveals its unique elements sequentially. The final callback resolves into a black screen with restart.
 
 ## Proof and content
 
@@ -27,4 +27,4 @@ Archive records live in `src/data/sources.ts`; captions, license status, and lin
 
 ## Constraints and unresolved decisions
 
-Preserve the projection-first scene composition, independent controls, transition locks, and simplified-motion path. Small screens retain scaled scenes; archive dialogs provide readable image inspection. Deployment to Vercel remains blocked by external credentials/network availability and is not evidence of a public release.
+Preserve the projection-first scene composition, independent controls, transition locks, and simplified-motion path. Small screens retain scaled scenes; archive dialogs provide readable image inspection.

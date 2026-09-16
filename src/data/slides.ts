@@ -8,6 +8,7 @@ export const slides = [
   "Итог",
 ];
 export const backgrounds = [
+  "/assets/map-overview.webp",
   "/assets/hero.webp",
   "/assets/kermek.webp",
   "/assets/denisova.webp",

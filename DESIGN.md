@@ -87,7 +87,7 @@ A cinematic archaeological presentation using limestone paper, dark photographic
 
 Ochre anchors the geography; warm neutrals connect museum material to dark reconstruction scenes. The frontmatter records the core palette; detailed scene-specific tones remain in `src/styles.css`.
 
-- **Primary — ochre:** map points, route lines, and the burial-to-marker transition.
+- **Primary — ochre:** route lines and geographic accents; circular map points are filled with reconstruction photographs.
 - **Neutral — paper and ink:** the overview map, archive cards, menu, and dialogs.
 - **Neutral — stage surround / scene dark:** letterboxing, scenic canvas, and the final map.
 - **Text on dark:** primary scenic copy. Credit uses a subdued warm gray on paper.
@@ -101,11 +101,11 @@ Cormorant Garamond (Georgia/serif fallback) carries headlines, dates, and large 
 | Role | Implemented scale | Use |
 | --- | --- | --- |
 | Opening title | 148px, 500, .94 line height | ДО РОССИИ |
-| Site title | 116px; Denisova 104px | Location identity |
+| Site title | Sungir 116px; Denisova 104px; Kermek/Kostenki 92px | Location identity |
 | Map / conclusion title | 80px / 86px, .98 line height | Geographic opening / final thesis |
-| Date | 39–46px, serif | Site chronology |
+| Date | 37–46px, serif | Site chronology |
 | Opening number / bead count | 68px / 126px, serif | Time depth / material detail |
-| Thesis | 32px, 1.5 line height | Main explanatory sentence |
+| Thesis | 32px, 1.5 line height; Kermek/Kostenki 27px, 1.45 | Main explanatory sentence |
 | Supporting body | 24px, 1.6 line height | Context; typically max-width 650px |
 | Region label | 19px, .16em tracking | Uppercase location metadata |
 | Archive label / credit | 13px; compact variants 10–12px | Type, attribution, license |
@@ -114,11 +114,11 @@ Archive enlargement and source dialogs use viewport-sized text outside the scale
 
 ## Layout
 
-The presentation is a centered, fixed 1920×1080 stage scaled by `min(viewport width / 1920, viewport height / 1080)`. Black-toned letterboxing preserves the composition. There is no stage scroll or mobile content reflow. Most copy begins at x=94–104px; major scene panels are absolutely placed.
+The presentation is a centered, fixed 1920×1080 stage scaled by `min(viewport width / 1920, viewport height / 1080)`. Black-toned letterboxing preserves the composition. There is no stage scroll or mobile content reflow. Most copy begins at x=94–104px; Kermek and Kostenki use x=76px, y=90px, width=490px. Major scene panels are absolutely placed.
 
-The archive language has three arrangements: floating paper figures; a 550px Denisova museum column beside a 1370px image window; and a large Sungir burial with three smaller artifacts. The overview uses a four-column timeline with 40px gaps. The final map is 900×523px at x=510px, y=-25px, above centered copy beginning at y=475px.
+Every scenic background fills the 1920×1080 stage. Kermek and Kostenki keep their existing archive strip at x=620px, y=808px, width=1180px, height=170px. Kermek uses one horizontal figure; Kostenki uses two columns with a 24px gap. The latest user correction restores full-stage photographs and leaves card placement unchanged. Denisova retains a 550px museum column over the right side of a full-stage photograph. Sungir retains a large burial model with three smaller artifacts. The overview uses a four-column timeline with 40px gaps. The final map is 900×523px at x=510px, y=-25px, above centered copy beginning at y=475px.
 
-Navigation remains in viewport coordinates: desktop arrows are 88×88px, 32px from the sides and 30px from the bottom. At ≤900px they are 56×56px with 16px side and 14px bottom offsets; at ≥2400px they are 112×112px. The menu trigger is 52×52px (44×44px on small viewports). Between 901px and 1919px, `--nav-safe-x: 136 / scale` adjusts selected lower captions, cards, timeline, strip, and museum padding to clear full-size controls.
+Navigation remains in viewport coordinates: desktop arrows are 88×88px, 32px from the sides and 30px from the bottom. At ≤900px they are 56×56px with 16px side and 14px bottom offsets; at ≥2400px they are 112×112px. The menu trigger is 52×52px (44×44px on small viewports). Between 901px and 1919px, `--nav-safe-x: 136 / scale` adjusts selected lower captions, cards, timeline, strip, and museum padding to clear full-size controls. Kermek/Kostenki strip widths in that range are `calc(1300px - max(60px, var(--nav-safe-x)))`.
 
 The sources dialog is at most 850px wide and 85dvh high. The archive enlargement dialog is `min(1200px, 94vw)` by 92dvh, portaled to the document body so it does not inherit stage scaling. Menus and dialogs can scroll independently where needed.
 
@@ -128,18 +128,24 @@ Scenic depth comes from the supplied photographs, directional dark overlays, and
 
 ## Shapes
 
-Panels, controls, dialogs, and archive mats have square corners. Fine 1px rules separate source and menu rows. Arrow buttons use a thin translucent border and a 34px outlined SVG. Map markers and the 6px loading dot are circular; the final burial morph clips into a circle. No rounded-card system is implemented.
+Panels, controls, dialogs, and archive mats have square corners. Fine 1px rules separate source and menu rows. Arrow buttons use a thin translucent border and a 34px outlined SVG. Map markers are 26px-radius circles filled by the corresponding reconstruction through SVG patterns, with 3px outlines. The 6px loading dot is also circular. No rounded-card system is implemented.
 
 ## Components
 
 - **Presentation controls:** previous/next arrows, centered `01 / 07` counter, and a subdued menu trigger. Disabled controls use .35 opacity; arrows darken on hover. All interactive elements receive a 3px focus outline with 5px offset.
 - **Contents menu:** paper panel with seven numbered scene buttons; the current row uses `#dfd6c7` and `#865030`. Includes sources, fullscreen, replay, and a 20px native reduced-motion checkbox. The menu restores focus on its close button path.
 - **Archival card:** image mat, material label, title, linked author/license. Images use `contain`; hover offers “Увеличить”. A native modal shows the full image and attribution. Loading failure preserves a readable source-material fallback.
-- **Map and timeline:** paper geography and ochre locations recur in the dark finale. The dotted line is a narrative sequence, as clarified in sources. Four timeline entries connect location, age, and period.
+- **Map and timeline:** paper geography and four photo-filled location circles recur in the dark finale. The locations are projected from longitude/latitude in `src/data/locations.ts`; each photo matches its site reconstruction. The dotted line is a narrative sequence, as clarified in sources. Four timeline entries connect location, age, and period.
 - **Sources dialog:** native modal with titles, authors, source URLs, license links, and scientific qualifications from `src/data/sources.ts` and the supplementary entries in `src/App.tsx`.
 - **Ending / loading:** a black ending offers “С начала”; loading uses a single muted pulsing point, disabled under reduced motion. A failed-background notice offers reload.
 
-Motion is orchestrated by GSAP in `src/animation/controller.ts`: opacity and 14–20px copy reveals, typically .65–.7s with .16–.25s staggers; `power2.out` copy easing and `power2.inOut` camera easing. Adjacent scenes use zoom, vertical travel, and the Sungir burial-to-map-marker morph. Navigation locks during transitions and reveals. Backward navigation and direct jumps restore complete scenes. System or manual reduced motion uses an .18s reveal and .3/.4s crossfade without camera travel. No sound or automatic advance is present.
+Motion is orchestrated in `src/animation/controller.ts` with one GSAP master timeline per navigation. Forward and backward site travel follow the same sequence: hide source content; close a circular aperture over the stationary source photograph (.75s); fade to the enlarged photo point (.18s); pull the map camera out (.9s); pause on the map (.12s); approach the destination point (.95s, scale 4.6); crossfade into its aperture (.18s); open the circle to all screen corners (.85s); then reveal destination content. Photographs remain full-stage throughout the aperture effect, without translation or scaling. Hero and overview have no source site photo; the finale crossfades to the final map.
+
+The camera plane uses `public/assets/map-overview.webp`, generated from the map SVG by `scripts/build-map-snapshot.mjs`. The hidden live SVG provides canonical point coordinates measured before any camera transform. The circular clip container scales while its inner photograph counter-scales, preserving fixed photo bounds. There is no animated SVG geometry, blur, clip-path morph, or burial-image morph.
+
+Each scene owns an explicit ordered reveal list, deduplicated before animation. Text and other non-card steps run for .23s; each archive card runs for .28s, using opacity, 10px vertical travel, and `power1.out`. Steps run sequentially exactly once per normal reveal, including backward arrivals. The already-visible map points are skipped at the travel-to-map handoff. Camera movement uses `power2.inOut`; navigation remains locked through the final reveal. Replay uses the same scene-specific order.
+
+System or manual reduced motion bypasses camera travel: .18s source fade followed by .18s destination fade, then content appears without stagger or movement. Immediate menu/hash jumps similarly bypass travel and restore the complete destination. No sound or automatic advance is present.
 
 ## Do's and Don'ts
 
